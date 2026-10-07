@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/* Premiere Academy brand colours (matched from premiereacademyng.org), laid out in the style of a
+   horizontally scrolling independent-school homepage. Crimson leads, navy replaces black, gold and cyan accent. */
+/* "h-mode": styles that only apply while the homepage is scrolling sideways (desktop, motion allowed). */
+@custom-variant h-mode (&:where([data-hmode="true"], [data-hmode="true"] *));
+
+@theme {
+  --color-crimson-50: #fbefef;
+  --color-crimson-300: #e48a95;
+  --color-crimson-500: #b8283a;
+  --color-crimson-600: #a3202e;
+  --color-crimson-700: #861a26;
+  --color-crimson-800: #6b1520;
+
+  --color-navy-50: #f0f2f9;
+  --color-navy-700: #252f66;
+  --color-navy-800: #1c2557;
+  --color-navy-900: #141b42;
+  --color-navy-950: #0b1030;
+
+  --color-cyan-400: #2fc0f2;
+  --color-cyan-500: #00a8e8;
+  --color-gold-300: #f6d76b;
+  --color-gold-400: #f2c230;
+
+  --color-mist: #f4f4f2;
+
+  --font-sans: var(--font-source), ui-sans-serif, system-ui, sans-serif;
+  /* Heavy, extra-wide grotesque for headlines */
+  --font-display: var(--font-archivo), "Arial Black", sans-serif;
+  --font-serif: var(--font-playfair), Georgia, serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-white font-sans text-navy-900 antialiased;
+  }
+  ::selection {
+    @apply bg-crimson-600 text-white;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-4 outline-gold-400;
+  }
+}
+
+/* Headline style: Archivo at full width and weight */
+@utility headline {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 125%;
+  font-variation-settings: "wdth" 125;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.92;
+}
+
+/* Small, bold, widely tracked labels */
+@utility eyebrow {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-variation-settings: "wdth" 110;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.95rem;
+}
+
+/* Hide a scrollbar but keep the element scrollable */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
