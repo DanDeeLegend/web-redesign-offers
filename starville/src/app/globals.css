@@ -1,0 +1,93 @@
+@import "tailwindcss";
+
+/* Brand tokens, sampled from starvilleschool.com:
+   navy #022547 (header, cards, footer) · sky blue #1A80E8 (wordmark) · cream #EAD9A0 (footer labels) */
+@theme {
+  --color-navy-50: #eef3f9;
+  --color-navy-100: #d6e1ef;
+  --color-navy-200: #a9bdd8;
+  --color-navy-300: #7290b8;
+  --color-navy-600: #12447a;
+  --color-navy-700: #0a3563;
+  --color-navy-800: #052c55;
+  --color-navy-900: #022547;
+  --color-navy-950: #01152a;
+
+  --color-azure-50: #eef5fd;
+  --color-azure-100: #d9e9fc;
+  --color-azure-200: #b4d4f9;
+  --color-azure-300: #7cb8f5;
+  --color-azure-400: #4b9cef;
+  --color-azure-500: #1a80e8;
+  --color-azure-600: #0f6cd0;
+  --color-azure-700: #0c57a8;
+
+  --color-cream-100: #f8f1dc;
+  --color-cream-300: #ead9a0;
+  --color-cream-500: #c9ad5c;
+
+  --color-paper: #f7f8fb;
+
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-brand: var(--font-cinzel), Georgia, serif;
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-spin-slow: spin 28s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes expand {
+    from { height: 0; }
+    to { height: var(--radix-accordion-content-height); }
+  }
+  @keyframes collapse {
+    from { height: var(--radix-accordion-content-height); }
+    to { height: 0; }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
+  }
+  body {
+    @apply bg-white font-sans text-navy-900 antialiased;
+  }
+  ::selection {
+    @apply bg-azure-500 text-white;
+  }
+  :focus-visible {
+    @apply outline-3 outline-offset-3 outline-azure-500 rounded-sm;
+  }
+}
+
+@utility container-x {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+/* Film grain for the night-sky sections */
+@utility grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-marquee, .animate-spin-slow, .animate-float { animation: none !important; }
+}
