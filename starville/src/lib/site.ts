@@ -118,3 +118,12 @@ export const faqs = [
     a: "Plot 2305, beside Gilmor Construction Company, Jahi II, Abuja, Nigeria.",
   },
 ];
+
+// Photos that shuffle inside "Outstanding Learning Environment".
+// When the school supplies real campus photos, replace or extend this list (any number of photos works).
+export const environmentPhotos = [
+  { src: "/img/welcome-corridor.jpg", alt: "A colourful corridor mural reading 'Welcome to the happy place'", position: "50% 50%" },
+  { src: "/img/cookery.jpg", alt: "Students cooking together in a school kitchen", position: "50% 50%" },
+  { src: "/img/primary.jpg", alt: "Primary pupils playing hopscotch in a bright corridor", position: "50% 20%" },
+  { src: "/img/early-years.jpg", alt: "An Early Years pupil working on a craft activity", position: "30% 55%" },
+] as const;

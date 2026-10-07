@@ -1,9 +1,10 @@
 import Image from "next/image";
-import { GraduationCap, ShieldCheck, Sun } from "lucide-react";
+import { GraduationCap, Sun } from "lucide-react";
 import { Reveal } from "@/components/reveal";
 import { YearsCountUp } from "@/components/count-up";
 import { Sparkle } from "@/components/icons";
-import { site } from "@/lib/site";
+import { PhotoShuffle } from "@/components/photo-shuffle";
+import { environmentPhotos, site } from "@/lib/site";
 
 export function Pillars() {
   return (
@@ -15,7 +16,7 @@ export function Pillars() {
               <Sparkle className="size-3" /> Our promise
             </p>
             <h2 id="pillars-title" className="max-w-xl font-display text-[clamp(2.2rem,1.5rem+2.6vw,3.6rem)] leading-[1.05] tracking-[-.02em]">
-              Three things every Starville family can count on.
+              What every Starville family can count on.
             </h2>
           </div>
           <p className="max-w-sm text-navy-900/65">
@@ -46,36 +47,25 @@ export function Pillars() {
             <p className="mt-4 max-w-[16rem] text-white/70">years nurturing children in Abuja, since {site.founded}.</p>
           </Reveal>
 
-          {/* Safeguarding */}
-          <Reveal delay={0.15} className="rounded-[28px] bg-azure-50 p-7 md:col-span-3 lg:col-span-5">
-            <span className="mb-6 grid size-12 place-items-center rounded-2xl bg-white text-azure-600 shadow-sm">
-              <ShieldCheck className="size-6" aria-hidden />
-            </span>
-            <h3 className="font-display text-2xl">Safeguarding</h3>
-            <p className="mt-2 text-navy-900/65">Every child is safe, valued and protected.</p>
-          </Reveal>
-
-          {/* Learning environment */}
-          <Reveal delay={0.1} className="group relative overflow-hidden rounded-[28px] bg-navy-50 md:col-span-4 lg:col-span-7">
-            <div className="grid h-full sm:grid-cols-2">
-              <div className="flex flex-col justify-center p-7 sm:p-9">
-                <span className="mb-6 grid size-12 place-items-center rounded-2xl bg-white text-azure-600 shadow-sm">
-                  <Sun className="size-6" aria-hidden />
-                </span>
-                <h3 className="font-display text-2xl">Outstanding Learning Environment</h3>
-                <p className="mt-2 text-navy-900/65">A safe and inspiring environment for learning, at our purpose-built site in Jahi.</p>
-              </div>
-              <div className="relative min-h-[220px]">
-                <Image src="/img/welcome-corridor.jpg" alt="A colourful corridor mural reading 'Welcome to the happy place'" fill sizes="(max-width: 640px) 100vw, 30vw" className="object-cover transition duration-1000 group-hover:scale-105" />
-              </div>
-            </div>
-          </Reveal>
-
           {/* Motto */}
-          <Reveal delay={0.2} className="relative flex flex-col justify-between overflow-hidden rounded-[28px] bg-cream-100 p-7 md:col-span-2 lg:col-span-5">
+          <Reveal delay={0.2} className="relative flex flex-col justify-between overflow-hidden rounded-[28px] bg-cream-100 p-7 md:col-span-3 lg:col-span-5">
             <Sparkle className="size-6 text-cream-500" />
             <p className="mt-8 font-display text-3xl leading-tight italic sm:text-[2.1rem]">&ldquo;{site.motto}.&rdquo;</p>
             <p className="mt-4 text-xs font-bold tracking-[.2em] text-navy-900/50 uppercase">Our motto</p>
+          </Reveal>
+
+          {/* Learning environment: full-width row, photos shuffle */}
+          <Reveal delay={0.1} className="group relative overflow-hidden rounded-[28px] bg-navy-50 md:col-span-6 lg:col-span-12">
+            <div className="grid h-full md:grid-cols-[1fr_1.2fr]">
+              <div className="flex flex-col justify-center p-7 sm:p-10 lg:p-14">
+                <span className="mb-6 grid size-12 place-items-center rounded-2xl bg-white text-azure-600 shadow-sm">
+                  <Sun className="size-6" aria-hidden />
+                </span>
+                <h3 className="font-display text-3xl sm:text-4xl">Outstanding Learning Environment</h3>
+                <p className="mt-3 max-w-md text-navy-900/65">A safe and inspiring environment for learning, at our purpose-built site in Jahi.</p>
+              </div>
+              <PhotoShuffle photos={environmentPhotos} sizes="(max-width: 768px) 100vw, 55vw" className="min-h-[280px] md:min-h-[380px]" />
+            </div>
           </Reveal>
         </div>
       </div>

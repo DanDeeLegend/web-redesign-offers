@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "motion/react";
-import { ArrowRight, MapPin, ShieldCheck } from "lucide-react";
+import { ArrowRight, MapPin } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { Starfield } from "@/components/starfield";
 import { CrestSeal } from "@/components/crest-seal";
@@ -17,24 +17,26 @@ function Arch({
   alt,
   position,
   className,
+  ry,
   delay,
-  priority = false,
 }: {
   src: string;
   alt: string;
   position: string;
   className: string;
+  /** Vertical radius of the arched top as a % of height. Half the width ÷ height gives a true semicircle. */
+  ry: string;
   delay: number;
-  priority?: boolean;
 }) {
   return (
     <motion.figure
-      initial={{ opacity: 0, y: 40, clipPath: "inset(100% 0 0 0 round 999px 999px 28px 28px)" }}
-      animate={{ opacity: 1, y: 0, clipPath: "inset(0% 0 0 0 round 999px 999px 28px 28px)" }}
+      initial={{ opacity: 0, y: 40, clipPath: "inset(100% 0 0 0)" }}
+      animate={{ opacity: 1, y: 0, clipPath: "inset(0% 0 0 0)" }}
+      style={{ borderRadius: `50% 50% 28px 28px / ${ry} ${ry} 28px 28px` }}
       transition={{ duration: 1.1, delay, ease }}
-      className={`absolute overflow-hidden rounded-t-full rounded-b-[28px] bg-navy-800 shadow-[0_40px_80px_-30px_rgba(0,0,0,.7)] ring-1 ring-white/15 ${className}`}
+      className={`relative w-full overflow-hidden bg-navy-800 shadow-[0_40px_80px_-30px_rgba(0,0,0,.7)] ring-1 ring-white/15 ${className}`}
     >
-      <Image src={src} alt={alt} fill priority={priority} sizes="(max-width: 1024px) 50vw, 25vw" className="object-cover" style={{ objectPosition: position }} />
+      <Image src={src} alt={alt} fill priority sizes="(max-width: 1024px) 30vw, 17vw" className="object-cover" style={{ objectPosition: position }} />
       <div className="absolute inset-0 bg-linear-to-t from-navy-950/40 to-transparent" />
     </motion.figure>
   );
@@ -140,44 +142,26 @@ export function Hero() {
           </motion.ul>
         </div>
 
-        {/* Arched photo collage */}
-        <div className="relative mx-auto aspect-[1/1.02] w-full max-w-[560px] lg:max-w-none">
-          <motion.div style={{ y: ySlow }} className="absolute inset-0">
-            <Arch src="/img/early-years.jpg" alt="An Early Years pupil absorbed in a craft activity" position="30% 55%" className="top-[14%] left-0 h-[62%] w-[34%]" delay={0.35} priority />
-          </motion.div>
-          <motion.div style={{ y: yFast }} className="absolute inset-0">
-            <Arch src="/img/secondary.jpg" alt="A secondary student conducting a science experiment" position="62% 40%" className="top-0 left-[33%] h-[80%] w-[38%]" delay={0.2} priority />
-          </motion.div>
-          <motion.div style={{ y: ySlow }} className="absolute inset-0">
-            <Arch src="/img/primary.jpg" alt="Primary pupils playing hopscotch" position="50% 8%" className="top-[24%] right-0 h-[62%] w-[31%]" delay={0.5} priority />
+        {/* Arched photo collage: three separate arches in a stepped row, nothing overlaps */}
+        <div className="mx-auto grid w-full max-w-[600px] grid-cols-[1fr_1.15fr_1fr] items-end gap-3 sm:gap-5 lg:max-w-none">
+          <motion.div style={{ y: ySlow }} className="flex flex-col">
+            <Arch src="/img/early-years.jpg" alt="An Early Years pupil absorbed in a craft activity" position="30% 55%" className="aspect-[3/4.3]" ry="34.9%" delay={0.35} />
           </motion.div>
 
-          {/* Floating seal */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.6 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.9, delay: 0.9, ease }}
-            className="absolute bottom-[2%] left-[22%] z-10 w-[24%] min-w-[96px]"
-          >
-            <CrestSeal />
+          <motion.div style={{ y: yFast }} className="flex flex-col">
+            <Arch src="/img/secondary.jpg" alt="A secondary student conducting a science experiment" position="62% 40%" className="aspect-[3/5]" ry="30%" delay={0.2} />
           </motion.div>
 
-          {/* Floating promise chip */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 1.1, ease }}
-            className="absolute right-[2%] bottom-[6%] z-10 animate-float"
-          >
-            <div className="flex items-center gap-3 rounded-2xl bg-white/95 p-3 pr-5 text-navy-900 shadow-2xl">
-              <span className="grid size-10 place-items-center rounded-xl bg-azure-50 text-azure-600">
-                <ShieldCheck className="size-5" aria-hidden />
-              </span>
-              <span className="leading-tight">
-                <span className="block text-sm font-bold">Safe. Valued. Protected.</span>
-                <span className="text-xs text-navy-900/60">Safeguarding comes first</span>
-              </span>
-            </div>
+          <motion.div style={{ y: ySlow }} className="flex flex-col items-center gap-4 sm:gap-6">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.9, delay: 0.9, ease }}
+              className="w-[78%]"
+            >
+              <CrestSeal />
+            </motion.div>
+            <Arch src="/img/primary.jpg" alt="Primary pupils playing hopscotch" position="50% 8%" className="aspect-[3/3.7]" ry="40.5%" delay={0.5} />
           </motion.div>
         </div>
       </div>
