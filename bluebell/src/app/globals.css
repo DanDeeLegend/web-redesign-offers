@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+/* Bluebell brand colours, sampled from bluebell.com.ng: navy (headings, buttons), sunshine yellow (buttons),
+   coral (accents). The pastel tints come from the live site's "Why Bluebell" cards. */
+@theme {
+  --color-navy: #0a1b3e;
+  --color-navy-800: #1b274c;
+  --color-navy-600: #3a4670;
+  --color-sun: #fbe063;
+  --color-sun-deep: #f5cf2e;
+  --color-coral: #ff603b;
+  --color-coral-deep: #e84a26;
+  --color-bluebell: #4f63d8; /* the flower, and the blue in the crest */
+  --color-cream: #fff8ec;
+  --color-cream-deep: #fbefd9;
+
+  --color-sky: #e3f5fd;
+  --color-mint: #c9f4e6;
+  --color-lilac: #eeeafb;
+  --color-butter: #fdedc4;
+  --color-blush: #fde4e8;
+  --color-lime: #f5f8d6;
+
+  --font-sans: var(--font-nunito), ui-rounded, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-hand: var(--font-caveat), cursive;
+
+  --animate-marquee: marquee 36s linear infinite;
+  --animate-blob: blob 14s ease-in-out infinite;
+  --animate-sway: sway 6s ease-in-out infinite;
+  --animate-spin-slow: spin 30s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  /* Soft organic photo frame that slowly changes shape */
+  @keyframes blob {
+    0%, 100% { border-radius: 42% 58% 55% 45% / 48% 42% 58% 52%; }
+    33% { border-radius: 55% 45% 38% 62% / 58% 50% 50% 42%; }
+    66% { border-radius: 38% 62% 60% 40% / 42% 60% 40% 58%; }
+  }
+  @keyframes sway {
+    0%, 100% { transform: rotate(-6deg); }
+    50% { transform: rotate(6deg); }
+  }
+}
+
+@layer base {
+  html { scroll-behavior: smooth; scroll-padding-top: 110px; }
+  body { @apply bg-cream font-sans text-navy antialiased; }
+  ::selection { @apply bg-sun text-navy; }
+  :focus-visible { @apply rounded-md outline-3 outline-offset-3 outline-coral; }
+}
+
+@utility container-x {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-optical-sizing: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-marquee, .animate-blob, .animate-sway, .animate-spin-slow { animation: none !important; }
+}
