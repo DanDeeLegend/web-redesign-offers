@@ -1,0 +1,94 @@
+@import "tailwindcss";
+
+/* "The Premiere Edition": an editorial broadsheet design language.
+   Brand colours matched to premiereacademyng.org: crimson (Enrol Now, announcement bar), navy (blazers),
+   cyan (top bar) and gold (stat icons). Values matched by eye from screenshots; swap in exact hex codes if the school has them. */
+@theme {
+  --color-crimson-50: #fbefef;
+  --color-crimson-400: #d24a58;
+  --color-crimson-500: #b8283a;
+  --color-crimson-600: #a3202e;
+  --color-crimson-700: #861a26;
+
+  --color-ink: #141b42; /* navy, used as the "ink" */
+  --color-ink-soft: #2e3a78;
+  --color-navy-950: #0b1030;
+
+  --color-cyan-400: #2fc0f2;
+  --color-cyan-500: #00a8e8;
+
+  --color-gold-300: #f6d76b;
+  --color-gold-400: #f2c230;
+  --color-gold-500: #c9970f;
+
+  --color-paper: #f6f1e7; /* newsprint */
+  --color-paper-deep: #ece4d3;
+  --color-rule: #141b42;
+
+  --font-sans: var(--font-mulish), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-playfair), Georgia, serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+
+  --radius-none: 0;
+
+  --animate-ticker: ticker 45s linear infinite;
+  --animate-ping-slow: ping 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+  }
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+  }
+  ::selection {
+    @apply bg-crimson-600 text-paper;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-4 outline-crimson-600;
+  }
+}
+
+@utility container-x {
+  @apply mx-auto w-full max-w-[1320px] px-4 sm:px-6 lg:px-10;
+}
+
+/* Halftone dots, the texture of a printed photograph */
+@utility halftone {
+  background-image: radial-gradient(rgb(246 241 231 / 0.16) 1px, transparent 1.4px);
+  background-size: 7px 7px;
+}
+
+/* Paper grain */
+@utility newsprint {
+  background-image:
+    radial-gradient(rgb(20 27 66 / 0.035) 1px, transparent 1px),
+    radial-gradient(rgb(20 27 66 / 0.025) 1px, transparent 1px);
+  background-size: 3px 3px, 5px 5px;
+  background-position: 0 0, 1px 2px;
+}
+
+/* Classic drop cap on the first letter of a story */
+@utility dropcap {
+  &::first-letter {
+    float: left;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 4.6em;
+    line-height: 0.82;
+    padding: 0.06em 0.1em 0 0;
+    color: var(--color-crimson-600);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-ticker, .animate-ping-slow { animation: none !important; }
+}
